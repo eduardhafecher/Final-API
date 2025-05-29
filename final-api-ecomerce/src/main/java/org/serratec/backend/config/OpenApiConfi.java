@@ -1,4 +1,4 @@
-package org.serratec.bakcend.config;
+package org.serratec.backend.config;
 
 import java.util.List;
 

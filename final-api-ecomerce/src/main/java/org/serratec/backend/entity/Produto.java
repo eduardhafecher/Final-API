@@ -1,6 +1,10 @@
-package org.serratec.bakcend.entity;
+package org.serratec.backend.entity;
+
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,23 +20,21 @@ import lombok.Setter;
 @Setter
 
 @Entity
-public class PedidoProduto {
+public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	public Long id;
 	
-	private Integer quantidade;
-	private Double precoVenda;
-	private Double desconto;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "id_pedido")
-	private Pedido pedido;
+	private String nome;
+	private Double preco;
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "id_produto")
-	private Produto produto;
+	@JoinColumn(name = "id_categoria")
+	private Categoria categoria;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "produto")
+	private List<PedidoProduto> pedidosRealizados;
 }

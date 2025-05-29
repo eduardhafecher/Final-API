@@ -1,4 +1,4 @@
-package org.serratec.bakcend.exception;
+package org.serratec.backend.exception;
 
 public class UsuarioException extends RuntimeException {
 

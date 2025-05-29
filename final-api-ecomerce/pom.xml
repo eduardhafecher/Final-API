@@ -8,7 +8,7 @@
 		<version>3.4.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.serratec.bakcend</groupId>
+	<groupId>org.serratec.backend</groupId>
 	<artifactId>final-api-ecomerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>final-api-ecomerce</name>

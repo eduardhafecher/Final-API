@@ -1,4 +1,4 @@
-package org.serratec.bakcend.exception;
+package org.serratec.backend.exception;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

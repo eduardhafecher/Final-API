@@ -1,4 +1,4 @@
-package org.serratec.bakcend.entity;
+package org.serratec.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

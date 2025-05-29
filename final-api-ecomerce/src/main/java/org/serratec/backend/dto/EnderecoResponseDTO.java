@@ -1,6 +1,6 @@
-package org.serratec.bakcend.dto;
+package org.serratec.backend.dto;
 
-import org.serratec.bakcend.entity.Endereco;
+import org.serratec.backend.entity.Endereco;
 
 public record EnderecoResponseDTO (String cep, String logradouro, String bairro, String localidade, String uf){
 

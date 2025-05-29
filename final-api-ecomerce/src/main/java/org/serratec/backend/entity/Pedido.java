@@ -1,10 +1,10 @@
-package org.serratec.bakcend.entity;
+package org.serratec.backend.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.serratec.bakcend.enums.StatusPedido;
+import org.serratec.backend.enums.StatusPedido;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
