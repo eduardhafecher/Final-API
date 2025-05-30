@@ -1,4 +1,4 @@
-package org.serratec.backend;
+package org.serratec.backend.controller;
 
 import org.serratec.backend.dto.EnderecoResponseDTO;
 import org.serratec.backend.service.EnderecoService;

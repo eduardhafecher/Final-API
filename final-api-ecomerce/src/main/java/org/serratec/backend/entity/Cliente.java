@@ -21,12 +21,17 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String cpf;
 	private String email;
+	private String cpf;
+	private String senha;
 	
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+	
+	
+//	@OneToMany(mappedBy = "id.cliente", fetch = FetchType.EAGER)
+//	private Set<ClientePerfil> clientePerfis = new HashSet<>();
 	
 }

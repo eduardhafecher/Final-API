@@ -43,8 +43,8 @@ public class EnderecoService {
 	}
 	
 	//metodo para buscar o endereco no repositorio - utilizar no service de cliente
-//	public Endereco buscarEndereco (String cep) {
-//		return repository.findByCep(cep);		
-//    }
-//	
+	public Endereco buscarEndereco (String cep) {
+		return repository.findByCep(cep);		
+    }
+	
 }
