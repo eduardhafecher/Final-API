@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -38,8 +41,10 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<String> erros = new ArrayList<>();
 		erros.add(ex.getMessage());
-		ErroResposta erroResposta = new ErroResposta(status.value(), "Existem campos inválidos", LocalDateTime.now(),
-				erros);
+		ErroResposta erroResposta = new ErroResposta(status.value()
+				,"Existem campos inválidos"
+				,LocalDateTime.now()
+				,erros);
 		return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
 
 	}
@@ -49,4 +54,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
+	    String mensagemErro = ex.getConstraintViolations()
+	        .stream()
+	        .map(ConstraintViolation::getMessage)
+	        .findFirst()
+	        .orElse("Erro de validação.");
+	    
+	   return ResponseEntity.badRequest().body(mensagemErro);
+	}
+
+	
 }

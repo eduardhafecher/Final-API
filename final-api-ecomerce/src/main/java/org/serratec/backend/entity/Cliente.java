@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,9 +25,11 @@ public class Cliente {
 	private String nome;
 	private String telefone;
 	
+	@NotBlank(message = "O email é obrigatório.")
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	@NotBlank(message = "O CPF é obrigatório.")
 	@Column(unique = true, nullable = false)
 	private String cpf;
 	private String senha;
