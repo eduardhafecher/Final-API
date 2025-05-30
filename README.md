@@ -14,6 +14,8 @@ Inclusao de criptografia para a senha de clientes;
 
 Exception Cliente capturando erros de email e cpf, com mensagem amigavel;
 
+Inclusao dos metodos GET, POST, PUT e DELETE no ClienteController
+
 IMPORTANTE: para testar a inclusao de cliente, devera ser colocado o email e senha no arquivo application, linhas 24 e 25.
 
 json para o postman:

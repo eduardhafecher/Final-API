@@ -17,7 +17,8 @@ import lombok.Setter;
 
 public class ClienteRequestDTO {
 
-	@NotBlank
+	@NotBlank(message = "O telefone é obrigatório.")
+	@Column(nullable = false)
 	private String nome;
 
 	@NotBlank(message = "O email é obrigatório.")
