@@ -3,6 +3,7 @@ package org.serratec.backend.dto;
 import org.hibernate.validator.constraints.br.CPF;
 import org.serratec.backend.entity.Cliente;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -19,10 +20,16 @@ public class ClienteRequestDTO {
 	@NotBlank
 	private String nome;
 
-	@Email
+	@Email(message = "Email inválido")
+	@Column(unique = true, nullable = false)
 	private String email;
 	
-	@CPF
+	@NotBlank(message = "O Telefone é obrigatório.")
+    @Pattern(regexp = "\\d{11}", message = "Telefone inválido. Formato valido apenas digitos: xxxxxxxxxx")
+	private String telefone;
+	
+	@CPF(message = "CPF inválido")
+	@Column(unique = true, nullable = false)
 	private String cpf;
 
 	@NotBlank
@@ -40,14 +47,16 @@ public class ClienteRequestDTO {
 	public ClienteRequestDTO(Cliente cliente) {
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+		this.telefone = cliente.getTelefone();
 		this.cpf = cliente.getCpf();
 		this.senha = cliente.getSenha();
 	}
 	
 //	construtor para requisitar a informacao do cep
-	public ClienteRequestDTO(String nome, String email, String cpf, String senha, /*Set<ClientePerfil> clientePerfis,*/ String cep) {
+	public ClienteRequestDTO(String nome, String email, String telefone,String cpf, String senha, /*Set<ClientePerfil> clientePerfis,*/ String cep) {
         this.nome = nome;
         this.email = email;
+        this.telefone = telefone;
         this.senha = senha;
         this.cpf = cpf;
 //        this.clientePerfis = clientePerfis;
