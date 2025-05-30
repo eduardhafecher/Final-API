@@ -20,6 +20,7 @@ public class ClienteRequestDTO {
 	@NotBlank
 	private String nome;
 
+	@NotBlank(message = "O email é obrigatório.")
 	@Email(message = "Email inválido")
 	@Column(unique = true, nullable = false)
 	private String email;
@@ -28,6 +29,7 @@ public class ClienteRequestDTO {
     @Pattern(regexp = "\\d{11}", message = "Telefone inválido. Formato valido apenas digitos: xxxxxxxxxx")
 	private String telefone;
 	
+	@NotBlank(message = "O CPF é obrigatório.")
 	@CPF(message = "CPF inválido")
 	@Column(unique = true, nullable = false)
 	private String cpf;
