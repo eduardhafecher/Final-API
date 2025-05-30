@@ -84,6 +84,43 @@ public class ClienteService {
 		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
 	
 		return new ClienteResponseDTO(clienteEntity.getId(), clienteEntity.getNome(), clienteEntity.getTelefone(),clienteEntity.getEmail());
-	
 	}
+
+	@Transactional
+	public ClienteResponseDTO atualizar(Long id, ClienteRequestDTO cliente) {
+		Optional<Cliente> clienteValido = repoCliente.findById(id);
+		if(!clienteValido.isPresent()) {
+			throw new ClienteException("Id "+id+" não existe no sistema");
+		}
+		
+		endServ.buscar(cliente.getCep());									//Verifica/cria o endereco na tabela
+		Endereco end = endServ.buscarEndereco(cliente.getCep());
+		
+		Cliente clienteEntity = clienteValido.get();
+		clienteEntity.setNome(cliente.getNome() != null ? cliente.getNome() : clienteEntity.getNome());
+		clienteEntity.setEmail(cliente.getEmail() != null ? cliente.getEmail() : clienteEntity.getEmail());
+		clienteEntity.setTelefone(cliente.getTelefone()!= null ? cliente.getTelefone() : clienteEntity.getTelefone());
+		clienteEntity.setCpf(cliente.getCpf()!= null ? cliente.getCpf() : clienteEntity.getCpf());
+		clienteEntity.setEndereco(end);
+		
+		clienteEntity=repoCliente.save(clienteEntity);
+		
+		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Atualização de Cadastro", cliente.toString());
+		
+		return new ClienteResponseDTO(clienteEntity.getId(), 
+										clienteEntity.getNome(), 
+										clienteEntity.getTelefone(),
+										clienteEntity.getEmail());
+
+	}
+
+	@Transactional
+	public void remover(Long id) {
+		Optional<Cliente> clienteExistente = repoCliente.findById(id);
+		if(!clienteExistente.isPresent()) {
+			throw new ClienteException("Id "+id+" não existe no sistema");
+		}
+		repoCliente.deleteById(id);
+	}
+	
 }	
