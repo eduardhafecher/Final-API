@@ -12,7 +12,7 @@ import org.serratec.backend.entity.Endereco;
 import org.serratec.backend.exception.ClienteException;
 import org.serratec.backend.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -29,8 +29,8 @@ public class ClienteService {
 //	@Autowired
 //	private ClientePerfilRepository clientePerfilRepository;
 	
-//	@Autowired
-//	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	private MailConfig mailConfig;
@@ -64,8 +64,11 @@ public class ClienteService {
 		clienteEntity.setCpf(cliente.getCpf());
 		
 //		cliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
+//		
+//		clienteEntity.setSenha(cliente.getSenha());
 		
-		clienteEntity.setSenha(cliente.getSenha());
+		clienteEntity.setSenha(passwordEncoder.encode(cliente.getSenha()));
+		
 		clienteEntity.setEndereco(end);									//Inclui endereco no objeto
 		
 //		for (ClientePerfil up: cliente.getClientePerfis()) {
@@ -78,7 +81,7 @@ public class ClienteService {
 		
 //		clientePerfilRepository.saveAll(cliente.getClientePerfis());
 		
-		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
+//		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
 	
 		return new ClienteResponseDTO(clienteEntity.getId(), clienteEntity.getNome(), clienteEntity.getEmail());
 	
