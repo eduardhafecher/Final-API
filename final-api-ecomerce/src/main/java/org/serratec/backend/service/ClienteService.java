@@ -62,13 +62,7 @@ public class ClienteService {
 		clienteEntity.setNome(cliente.getNome());
 		clienteEntity.setEmail(cliente.getEmail());
 		clienteEntity.setCpf(cliente.getCpf());
-		
-//		cliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
-//		
-//		clienteEntity.setSenha(cliente.getSenha());
-		
 		clienteEntity.setSenha(passwordEncoder.encode(cliente.getSenha()));
-		
 		clienteEntity.setEndereco(end);									//Inclui endereco no objeto
 		
 //		for (ClientePerfil up: cliente.getClientePerfis()) {
@@ -81,7 +75,7 @@ public class ClienteService {
 		
 //		clientePerfilRepository.saveAll(cliente.getClientePerfis());
 		
-//		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
+		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
 	
 		return new ClienteResponseDTO(clienteEntity.getId(), clienteEntity.getNome(), clienteEntity.getEmail());
 	
