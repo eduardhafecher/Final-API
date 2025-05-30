@@ -2,6 +2,7 @@ package org.serratec.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,12 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String telefone;
+	
+	@Column(unique = true, nullable = false)
 	private String email;
+	
+	@Column(unique = true, nullable = false)
 	private String cpf;
 	private String senha;
 	

@@ -42,33 +42,33 @@ public class ClienteService {
 		List<Cliente> clientes = repoCliente.findAll();
 		List<ClienteResponseDTO> clientesDTO = new ArrayList<>();
 		for(Cliente cliente : clientes) {
-			clientesDTO.add(new ClienteResponseDTO(cliente.getId(), cliente.getNome(), cliente.getEmail()));
+			clientesDTO.add(new ClienteResponseDTO(cliente.getId(), cliente.getNome(), cliente.getTelefone(),cliente.getEmail()));
 		}
 		return clientesDTO;
 	}
 	
 	@Transactional
 	public ClienteResponseDTO inserir(ClienteRequestDTO cliente) {
-		Optional<Cliente> u = repoCliente.findByEmail(cliente.getEmail());
+		Optional<Cliente> cpfExp = repoCliente.findByCpf(cliente.getCpf());
+		Optional<Cliente> emailExp = repoCliente.findByEmail(cliente.getEmail());
 		
 		endServ.buscar(cliente.getCep());									//Verifica/cria o endereco na tabela
 		Endereco end = endServ.buscarEndereco(cliente.getCep());			//Chama o metodo em endereco service
 		
-		if(u.isPresent()) {
+		if(cpfExp.isPresent()) {
+			throw new ClienteException("CPF já cadastrado");
+		}
+		if(emailExp.isPresent()) {
 			throw new ClienteException("Email já cadastrado");
 		}
+		
 		
 		Cliente clienteEntity = new Cliente();
 		clienteEntity.setNome(cliente.getNome());
 		clienteEntity.setEmail(cliente.getEmail());
+		clienteEntity.setTelefone(cliente.getTelefone());
 		clienteEntity.setCpf(cliente.getCpf());
-		
-//		cliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
-//		
-//		clienteEntity.setSenha(cliente.getSenha());
-		
 		clienteEntity.setSenha(passwordEncoder.encode(cliente.getSenha()));
-		
 		clienteEntity.setEndereco(end);									//Inclui endereco no objeto
 		
 //		for (ClientePerfil up: cliente.getClientePerfis()) {
@@ -81,9 +81,9 @@ public class ClienteService {
 		
 //		clientePerfilRepository.saveAll(cliente.getClientePerfis());
 		
-//		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
+		mailConfig.enviar(clienteEntity.getEmail(), "Confirmação de Cadastro", cliente.toString());
 	
-		return new ClienteResponseDTO(clienteEntity.getId(), clienteEntity.getNome(), clienteEntity.getEmail());
+		return new ClienteResponseDTO(clienteEntity.getId(), clienteEntity.getNome(), clienteEntity.getTelefone(),clienteEntity.getEmail());
 	
 	}
 }	
