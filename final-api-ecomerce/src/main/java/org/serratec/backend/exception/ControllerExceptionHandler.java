@@ -44,8 +44,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
-	@ExceptionHandler(UsuarioException.class)
-	protected ResponseEntity<Object> handleUsuarioException(UsuarioException ex) {
+	@ExceptionHandler(ClienteException.class)
+	protected ResponseEntity<Object> handleClienteException(ClienteException ex) {
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 
